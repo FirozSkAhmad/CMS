@@ -1,10 +1,9 @@
-.screen {
+/* .screen {
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr 5fr;
   column-gap: 5px;
   white-space: nowrap;
-  box-sizing: border-box;
   padding: 10px;
 }
 
@@ -26,4 +25,4 @@
   .sideNav {
     display: none;
   }
-}
+} */

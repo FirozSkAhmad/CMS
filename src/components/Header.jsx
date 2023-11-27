@@ -1,11 +1,12 @@
 import searchIcon from "../../utils/searchIcon.svg";
-import './Header.css'
+import { NavLink } from "react-router-dom";
+import "./Header.css";
 
-const Header = () => {
+const Header = ({ headerName }) => {
   return (
     <div className="header_con">
       <div className="title">
-        <h2>In The News</h2>
+        <h2>{headerName}</h2>
       </div>
       <div className="actions_con">
         <div className="search_container">
@@ -16,9 +17,9 @@ const Header = () => {
           />
           <img className="search_icon" src={searchIcon} alt="searchIcon SVG" />
         </div>
-        <button>
-          Upload New
-        </button>
+        <NavLink style={{ textDecoration: "none" }} to="/upload">
+          <button>Upload New</button>
+        </NavLink>
       </div>
     </div>
   );

@@ -1,10 +1,40 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.screen {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  column-gap: 5px;
+  white-space: nowrap;
+  padding: 10px;
+}
+
+.sideNav {
+  background-color: #383838;
+  border-radius: 10px;
+}
+
+.main {
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  border: 1px solid rgb(173, 173, 173);
+}
+
+@media (max-width: 750px) {
+  .screen {
+    grid-template-columns: 1fr;
+  }
+  .sideNav {
+    display: none;
+  }
 }

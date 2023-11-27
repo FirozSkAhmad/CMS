@@ -1,0 +1,59 @@
+.table_container{
+  height: 580px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+table {
+  width: 98%;
+  margin: 0 12px;
+  border-collapse: collapse;
+  margin-top: 6px;
+}
+
+thead tr {
+  border-bottom: 1px solid #000;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+}
+
+.align_right {
+  text-align: right;
+}
+
+.align_center {
+  text-align: center;
+}
+
+.actions_con {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove_btn {
+  background-color: #ff6c6c;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.pagination_container {
+text-align: right;
+margin-right: 50px;
+margin-bottom: 10px;
+}
+
+.pagination_container button{
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid gray;
+}

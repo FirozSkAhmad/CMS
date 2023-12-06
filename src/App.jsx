@@ -7,7 +7,7 @@ import Upload from "./components/Upload";
 import Login from "./pages/Login";
 import CaseStudyUpload from "./components/CaseStudyUpload";
 import EditRow from "./components/EditRow";
-import CsEditRow from "./components/csEditRow";
+import CsEditRow from "./components/CsEditRow";
 
 const App = () => {
   const location = useLocation();

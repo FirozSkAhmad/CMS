@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import CaseStudyUpload from "./components/CaseStudyUpload";
 import EditRow from "./components/EditRow";
 import CsEditRow from "./components/CsEditRow";
+import SideBar from "./components/SideBar";
 
 const App = () => {
   const location = useLocation();
@@ -16,8 +17,8 @@ const App = () => {
     <>
       {!isLoginPage ? (
         <div className="screen">
-          <div className="sideNav">
-            <SideNav />
+          <div className="sideBar">
+            <SideBar />
           </div>
           <div className="main">
             <Outlet />

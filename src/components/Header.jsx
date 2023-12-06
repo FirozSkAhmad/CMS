@@ -1,10 +1,32 @@
 import searchIcon from "../../utils/searchIcon.svg";
+import menuIcon from "../../utils/menu.svg";
 import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import sharedContext from "../context/SharedContext";
 import "./Header.css";
+import SideNav from "./SideNav";
 
 const Header = ({ headerName }) => {
+  const { isSideNavOpen, setIsSideNavOpen } = useContext(sharedContext);
+
+  const toggleSideNav = () => {
+    setIsSideNavOpen(!isSideNavOpen);
+  };
+
   return (
     <div className="header_con">
+      <div className="menu_con">
+        <img
+          className="menu_icon"
+          onClick={toggleSideNav}
+          src={menuIcon}
+          alt="menuIcon SVG"
+        />
+        <div className="cmpy_name">
+          <h2>ProSquad |</h2>
+          <h6>cms dashboard</h6>
+        </div>
+      </div>
       <div className="title">
         <h2>{headerName}</h2>
       </div>
@@ -32,6 +54,9 @@ const Header = ({ headerName }) => {
             <button>Upload New</button>
           </NavLink>
         )}
+      </div>
+      <div className={`side_nav ${isSideNavOpen ? "open" : ""}`}>
+        <SideNav />
       </div>
     </div>
   );

@@ -1,43 +1,50 @@
 .header_con {
-  width: 98%;
-  margin: 0 12px;
+  padding: 20px 0;
   border-bottom: 1px solid #000;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
 }
 
-.header_con,
+.menu_con {
+  display: none;
+}
 .header_con .actions_con {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
 .header_con .actions_con .search_container {
-  position: relative;
-  margin: 20px;
+  display: flex;
 }
 
 .header_con .actions_con .search_input {
   padding: 10px;
-  width: 400px;
-  background-color: #CECECE;
+  background-color: #cecece;
   border: 1px solid gray;
-  border-radius: 5px;
+  border-radius: 5px 0 0 5px;
   padding-left: 15px;
   outline: none;
   transition: border 0.3s;
   border: 2px solid #ccc;
 }
 
-.header_con .actions_con .search_input:focus{
-    border: 2px solid #39b549;
+.header_con .actions_con .search_input:focus {
+  border: 2px solid #39b549;
+  border-right: none;
+}
+
+.header_con .actions_con .search_input:focus + .search_icon {
+  border: 2px solid #39b549;
+  border-left: none;
 }
 
 .header_con .actions_con .search_icon {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  cursor: pointer;
+  background-color: #cecece;
+  margin-left: -1px;
+  padding-right: 15px;
+  border-radius: 0 5px 5px 0;
 }
 
 .header_con .actions_con button {
@@ -49,3 +56,47 @@
   cursor: pointer;
 }
 
+.side_nav {
+  position: fixed;
+  top: 0;
+  left: 0; /* Start from the left */
+  width: 0; /* Initially hidden width */
+  height: 100%;
+  background-color: #383838;
+  transition: width 0.3s ease; /* Smooth transition effect */
+  z-index: 1;
+  overflow-x: hidden;
+}
+
+.side_nav.open {
+  width: 90%; /* Expanded width when the .open class is present */
+}
+
+@media screen and (max-width: 600px) {
+  .header_con {
+    grid-template-columns: 1fr;
+    row-gap: 15px;
+  }
+  .menu_con {
+    display: flex;
+    align-items: center;
+    height: 20px;
+    order: -2;
+  }
+  .menu_con .cmpy_name {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cmpy_name h6 {
+    margin-top: 4px;
+  }
+  .actions_con {
+    order: -1; /* Move actions_con to the first row */
+  }
+
+  .search_input {
+    width: 160px;
+  }
+}

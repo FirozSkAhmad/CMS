@@ -1,4 +1,4 @@
-import "./SideNav.css";
+import "./SideBar.css";
 import news from "../../utils/news.svg";
 import insights from "../../utils/insights.svg";
 import caseStudies from "../../utils/caseStudies.svg";
@@ -6,14 +6,10 @@ import logout from "../../utils/logout.svg";
 import { NavLink, useLocation } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
-import { useContext } from "react";
-import sharedContext from "../context/SharedContext";
-import closeIcon from "../../utils/closeIcon.svg";
 import toast from "react-hot-toast";
 
-const SideNav = () => {
-  const { isSideNavOpen, setIsSideNavOpen } = useContext(sharedContext);
 
+const SideBar = () => {
   const location = useLocation();
 
   // Function to check if the current route matches a given path
@@ -25,7 +21,6 @@ const SideNav = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        setIsSideNavOpen(false);
         toast.success("logged out Successfully");
         console.log("User signed out");
       })
@@ -38,14 +33,11 @@ const SideNav = () => {
 
   return (
     <div className="sideNav_con">
-      <div className="closeBtn_con">
-        <img
-          src={closeIcon}
-          alt="closeIcon"
-          onClick={() => setIsSideNavOpen(!isSideNavOpen)}
-        />
-      </div>
       <div className="Routes_con">
+        <div className="heading">
+          <h2>ProSquad |</h2>
+          <h6>cms dashboard</h6>
+        </div>
         <div className="categories_con">
           <NavLink
             style={{
@@ -55,7 +47,6 @@ const SideNav = () => {
               borderRadius: "5px",
             }}
             to="/news"
-            onClick={() => setIsSideNavOpen(false)}
           >
             <div className="category">
               <img src={news} alt="News SVG" />
@@ -72,7 +63,6 @@ const SideNav = () => {
               borderRadius: "5px",
             }}
             to="/insights"
-            onClick={() => setIsSideNavOpen(false)}
           >
             <div className="category">
               <img src={insights} alt="insights SVG" />
@@ -89,7 +79,6 @@ const SideNav = () => {
               borderRadius: "5px",
             }}
             to="/caseStudies"
-            onClick={() => setIsSideNavOpen(false)}
           >
             <div className="category">
               <img src={caseStudies} alt="caseStudies SVG" />
@@ -108,4 +97,4 @@ const SideNav = () => {
   );
 };
 
-export default SideNav;
+export default SideBar;

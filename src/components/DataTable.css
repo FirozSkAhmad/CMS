@@ -1,14 +1,11 @@
-.table_container{
-  height: 580px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+/* .table_container {
+  overflow: scroll;
+} */
 table {
-  width: 98%;
-  margin: 0 12px;
+  width: 100%;
   border-collapse: collapse;
   margin-top: 6px;
+  overflow-y: scroll;
 }
 
 thead tr {
@@ -46,14 +43,27 @@ td {
 }
 
 .pagination_container {
-text-align: right;
-margin-right: 50px;
-margin-bottom: 10px;
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
 }
 
-.pagination_container button{
+.pagination_container button {
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
   border: 1px solid gray;
+}
+
+@media screen and (max-width: 600px) {
+  .table_container {
+    overflow: scroll;
+  }
+  table {
+    width: 800px;
+  }
+  .pagination_container {
+    bottom: 30px;
+    right: 25%;
+  }
 }

@@ -17,9 +17,21 @@ const Header = ({ headerName }) => {
           />
           <img className="search_icon" src={searchIcon} alt="searchIcon SVG" />
         </div>
-        <NavLink style={{ textDecoration: "none" }} to="/upload">
-          <button>Upload New</button>
-        </NavLink>
+        {headerName !== "Case Studies" ? (
+          <NavLink
+            style={{ textDecoration: "none" }}
+            to={{
+              pathname: "/upload",
+              search: `headerName=${headerName}`,
+            }}
+          >
+            <button>Upload New</button>
+          </NavLink>
+        ) : (
+          <NavLink style={{ textDecoration: "none" }} to="/caseStudyUpload">
+            <button>Upload New</button>
+          </NavLink>
+        )}
       </div>
     </div>
   );

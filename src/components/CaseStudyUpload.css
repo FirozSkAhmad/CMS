@@ -1,0 +1,99 @@
+.csUpload_con {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  height: 100%;
+}
+
+.csContent {
+  width: 90%;
+}
+.csHeading_container {
+  border-bottom: 1px solid #000;
+}
+.csHeading {
+  margin: 20px;
+}
+
+.csMain_con {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  column-gap: 10vw;
+}
+
+.csLeft_con,
+.csRight_con {
+  display: flex;
+  flex-direction: column;
+  gap: 46px;
+}
+
+.csLeft_con,
+.csRight_con {
+  padding-top: 20px;
+}
+
+.input_field,
+.contextInput_field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.contextInput_field {
+  margin-top: 58px;
+}
+
+.input_field input,
+.input_field textarea,
+.contextInput_field textarea {
+  background-color: #cecece;
+  padding: 12px;
+  padding-left: 20px;
+  border: none;
+  border-radius: 5px;
+}
+
+.imgUpload_field {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons_con {
+  display: flex;
+  gap: 10px;
+}
+.uploadBtn,
+.changeBtn {
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.uploadBtn {
+  background-color: #39b549;
+}
+.changeBtn {
+  background-color: #ff6c6c;
+}
+
+.imgPreview_field {
+  max-width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.uploadBtn_con {
+  margin-top: 30px;
+}
+
+.rightTextFields_con {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2vw;
+}

@@ -3,8 +3,11 @@ import { Outlet, createBrowserRouter, useLocation } from "react-router-dom";
 import Protected from "./components/Protected";
 import SideNav from "./components/SideNav";
 import Main from "./components/Main";
-import Upload from "./components/upload";
+import Upload from "./components/Upload";
 import Login from "./pages/Login";
+import CaseStudyUpload from "./components/CaseStudyUpload";
+import EditRow from "./components/EditRow";
+import CsEditRow from "./components/csEditRow";
 
 const App = () => {
   const location = useLocation();
@@ -51,6 +54,18 @@ const appRouter = createBrowserRouter([
       {
         element: <Protected cmp={<Upload />} />,
         path: "/upload",
+      },
+      {
+        element: <Protected cmp={<CaseStudyUpload />} />,
+        path: "/caseStudyUpload",
+      },
+      {
+        element: <Protected cmp={<EditRow />} />,
+        path: "/editRow",
+      },
+      {
+        element: <Protected cmp={<CsEditRow />} />,
+        path: "/csEditRow",
       },
     ],
   },

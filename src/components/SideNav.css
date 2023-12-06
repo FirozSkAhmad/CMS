@@ -49,6 +49,11 @@
   gap: 80px;
 }
 
-.category:hover{
+.category:hover {
   background-color: gray;
+}
+
+.logout_con:hover {
+  background-color: gray;
+  border-radius: 5px;
 }

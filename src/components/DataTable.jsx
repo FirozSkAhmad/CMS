@@ -1,210 +1,62 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { getDocs, collection, deleteDoc, doc } from "firebase/firestore";
+import { db } from "../firebase";
 import "./DataTable.css";
 
 const PAGE_SIZE = 10;
 
-const DataTable = () => {
-  const rows = [
-    {
-      id: 1,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 2,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 3,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 4,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 5,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 6,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 7,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 8,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 9,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 10,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 11,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 12,
-      title: "In The World Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 14,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 15,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 16,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 17,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 18,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 19,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 20,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 21,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 22,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 23,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 24,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 25,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 26,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 27,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 28,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 29,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 30,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 31,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 32,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-    {
-      id: 33,
-      title: "In The News Title",
-      dateOfUpload: "15-11-23",
-      actions: "Edit",
-    },
-  ];
+const DataTable = ({ headerName }) => {
+  const [newsData, setNewsData] = useState([]);
+  const [insightsData, setInsightsData] = useState([]);
+  const [caseStudiesData, setCaseStudiesData] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const collectionRef = collection(db, headerName); // Replace 'your_collection_name' with the actual name of your collection
+      const snapshot = await getDocs(collectionRef);
+
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      console.log("Data from Firestore:", data);
+      if (headerName === "In The News") {
+        setNewsData(data);
+      } else if (headerName === "Insights") {
+        setInsightsData(data);
+      } else {
+        setCaseStudiesData(data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+    }
+  };
+
+  // Call the function to fetch data
+  useEffect(() => {
+    fetchData();
+  }, [headerName]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(rows.length / PAGE_SIZE);
-
-  const startIdx = (currentPage - 1) * PAGE_SIZE;
-  const endIdx = startIdx + PAGE_SIZE;
-  const visibleRows = rows.slice(startIdx, endIdx);
+  let totalPages, visibleRows;
+  if (headerName === "In The News") {
+    totalPages = Math.ceil(newsData.length / PAGE_SIZE);
+    const startIdx = (currentPage - 1) * PAGE_SIZE;
+    const endIdx = startIdx + PAGE_SIZE;
+    visibleRows = newsData.slice(startIdx, endIdx);
+  } else if (headerName === "Insights") {
+    totalPages = Math.ceil(insightsData.length / PAGE_SIZE);
+    const startIdx = (currentPage - 1) * PAGE_SIZE;
+    const endIdx = startIdx + PAGE_SIZE;
+    visibleRows = insightsData.slice(startIdx, endIdx);
+  } else {
+    totalPages = Math.ceil(caseStudiesData.length / PAGE_SIZE);
+    const startIdx = (currentPage - 1) * PAGE_SIZE;
+    const endIdx = startIdx + PAGE_SIZE;
+    visibleRows = caseStudiesData.slice(startIdx, endIdx);
+  }
 
   const [selectAll, setSelectAll] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -221,19 +73,31 @@ const DataTable = () => {
   };
 
   const handleSelectAllChange = () => {
-    const updatedSelectedRows = selectAll ? [] : rows.map((row) => row.id);
+    let updatedSelectedRows;
+
+    if (headerName === "In The News") {
+      updatedSelectedRows = selectAll ? [] : newsData.map((row) => row.id);
+    } else if (headerName === "Insights") {
+      updatedSelectedRows = selectAll ? [] : insightsData.map((row) => row.id);
+    } else {
+      updatedSelectedRows = selectAll
+        ? []
+        : caseStudiesData.map((row) => row.id);
+    }
+
     setSelectedRows(updatedSelectedRows);
     setSelectAll(!selectAll);
   };
 
-  const handleEdit = (rowId) => {
-    // Replace this with your actual logic for making an API call for editing
-    console.log(`Edit row ${rowId}`);
-  };
-
-  const removeRow = (rowId) => {
-    // Replace this with your actual logic for making an API call for removing
-    console.log(`Remove row ${rowId}`);
+  const removeRow = async (rowId) => {
+    try {
+      const documentRef = doc(db, headerName, rowId);
+      await deleteDoc(documentRef);
+      console.log(`Row with ID ${rowId} removed successfully from Firestore`);
+      fetchData();
+    } catch (error) {
+      console.error("Error removing document:", error.message);
+    }
   };
 
   return (
@@ -254,7 +118,7 @@ const DataTable = () => {
           </tr>
         </thead>
         <tbody>
-          {visibleRows.map((row) => (
+          {visibleRows?.map((row) => (
             <tr className="tableRow_con" key={row.id}>
               <td>
                 <input
@@ -263,15 +127,20 @@ const DataTable = () => {
                   onChange={() => handleCheckboxChange(row.id)}
                 />
               </td>
-              <td>{row.title}</td>
-              <td className="align_right">{row.dateOfUpload}</td>
+              <td>{row.name}</td>
+              <td className="align_right">{row.uploadDate.split("T")[0]}</td>
               <td className="align_center actions_con">
-                <p
-                  onClick={() => handleEdit(row.id)}
-                  style={{ cursor: "pointer" }}
+                <NavLink
+                  to={{
+                    pathname:
+                      headerName !== "Case Studies" ? "/editRow" : "/csEditRow",
+                    search: `rowData=${encodeURIComponent(
+                      JSON.stringify(row)
+                    )}&headerName=${headerName}`,
+                  }}
                 >
                   <u>Edit</u>
-                </p>
+                </NavLink>
                 <button
                   className="remove_btn"
                   onClick={() => removeRow(row.id)}

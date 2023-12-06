@@ -6,7 +6,7 @@ const Main = ({ name }) => {
     <div>
       <Header headerName={name} />
       <div className="table_con">
-        <DataTable />
+        <DataTable headerName={name} />
       </div>
     </div>
   );

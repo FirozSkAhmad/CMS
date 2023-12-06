@@ -1,34 +1,59 @@
 import "./Login.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import sharedContext from "../context/SharedContext";
+import toast from "react-hot-toast";
+
+import { auth } from "../firebase";
+import Loader from "../components/Loader";
 
 const Login = () => {
-//   const [error, setError] = useState("");
+  const { setLoader } = useContext(sharedContext);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const onChangeInput = (e) => {
-    console.log(e.target.checked);
-    switch (e.target.name) {
-      case "email":
-        setEmail(e.target.value);
-        break;
-      case "password":
-        setPassword(e.target.value);
-        break;
-      case "rememberMe":
-        setRememberMe(e.target.checked);
-        break;
-    }
+  const onChangeInput = (event) => {
+    const { name, value } = event.target;
+    setFormData((preState) => {
+      return {
+        ...preState,
+        [name]: value,
+      };
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoader(true);
+    if (!formData.email || !formData.password) {
+      setErrorMsg("Fill all fields");
+      return;
+    }
+    setErrorMsg("");
+
+    signInWithEmailAndPassword(auth, formData.email, formData.password)
+      .then(async (res) => {
+        console.log(res);
+        setLoader(false);
+        navigate("/news");
+        toast.success("logined Successfully");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+        setLoader(false);
+        setErrorMsg(err.message);
+      });
   };
 
   return (
     <div className="login_pg">
+      <Loader />
       <h3>ProSquad</h3>
       <div>
         <h4>Login</h4>
@@ -36,7 +61,7 @@ const Login = () => {
           <div className="input__Fld">
             <input
               type="email"
-              value={email}
+              value={formData.email}
               onChange={onChangeInput}
               placeholder="Email"
               required
@@ -47,7 +72,7 @@ const Login = () => {
           <div className="input__Fld">
             <input
               type="password"
-              value={password}
+              value={formData.password}
               onChange={onChangeInput}
               placeholder="Password"
               required
@@ -61,7 +86,7 @@ const Login = () => {
                 <input
                   name="rememberMe"
                   type="checkbox"
-                  checked={rememberMe}
+                  checked={""}
                   onChange={onChangeInput}
                 />{" "}
                 <p>Remember me</p>
@@ -71,9 +96,7 @@ const Login = () => {
               <p onClick={""}>Forgot password</p>
             </div>
           </div>
-          <div>
-            {/* <span style={{ color: "red" }}>{error}</span> */}
-          </div>
+          <div>{/* <span style={{ color: "red" }}>{error}</span> */}</div>
           <div className="sbt__Btn">
             <button type="submit">Login</button>
           </div>

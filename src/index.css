@@ -22,19 +22,16 @@ body {
 .sideNav {
   background-color: #383838;
   border-radius: 10px;
+  /* height: 97vh; */
 }
 
 .main {
   background-color: #e0e0e0;
   border-radius: 10px;
   border: 1px solid rgb(173, 173, 173);
+  /* height: 97vh; */
 }
 
-@media (max-width: 750px) {
-  .screen {
-    grid-template-columns: 1fr;
-  }
-  .sideNav {
-    display: none;
-  }
+button {
+  cursor: pointer;
 }

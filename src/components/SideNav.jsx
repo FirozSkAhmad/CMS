@@ -4,6 +4,10 @@ import insights from "../../utils/insights.svg";
 import caseStudies from "../../utils/caseStudies.svg";
 import logout from "../../utils/logout.svg";
 import { NavLink, useLocation } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import toast from "react-hot-toast";
+
 
 const SideNav = () => {
   const location = useLocation();
@@ -11,6 +15,20 @@ const SideNav = () => {
   // Function to check if the current route matches a given path
   const isRouteActive = (path) => {
     return location.pathname === path;
+  };
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        toast.success("logged out Successfully");
+        console.log("User signed out");
+      })
+      .catch((error) => {
+        // An error happened.
+        toast.error(error.message);
+        console.error("Error signing out:", error);
+      });
   };
 
   return (
@@ -39,7 +57,9 @@ const SideNav = () => {
             style={{
               textDecoration: "none",
               color: "white",
-              backgroundColor: isRouteActive("/insights") ? "gray" : "transparent",
+              backgroundColor: isRouteActive("/insights")
+                ? "gray"
+                : "transparent",
               borderRadius: "5px",
             }}
             to="/insights"
@@ -53,7 +73,9 @@ const SideNav = () => {
             style={{
               textDecoration: "none",
               color: "white",
-              backgroundColor: isRouteActive("/caseStudies") ? "gray" : "transparent",
+              backgroundColor: isRouteActive("/caseStudies")
+                ? "gray"
+                : "transparent",
               borderRadius: "5px",
             }}
             to="/caseStudies"
@@ -65,7 +87,7 @@ const SideNav = () => {
           </NavLink>
         </div>
       </div>
-      <div className="logout_con">
+      <div className="logout_con" onClick={handleLogout}>
         <h3>
           <u>Logout</u>
         </h3>

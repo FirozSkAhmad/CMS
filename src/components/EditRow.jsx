@@ -1,20 +1,21 @@
-import "./Upload.css";
+import "./EditRow.css";
 import { useState, useRef, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { storage, db } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { addDoc, collection } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import Loader from "./Loader";
 import sharedContext from "../context/SharedContext";
 import toast from "react-hot-toast";
 
-const Upload = () => {
+const EditRow = () => {
   const navigate = useNavigate();
   const { setLoader } = useContext(sharedContext);
 
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const headerName = queryParams.get("headerName");
+  const searchParams = new URLSearchParams(location.search);
+  const rowData = JSON.parse(decodeURIComponent(searchParams.get("rowData")));
+  const headerName = searchParams.get("headerName");
 
   const fileInputRef = useRef(null);
 
@@ -24,10 +25,13 @@ const Upload = () => {
     }
   };
 
-  const [name, setName] = useState("");
-  const [bodyText, setBodyText] = useState("");
-  const [buttonTitle, setButtonTitle] = useState("");
+  const [name, setName] = useState(rowData.name);
+  const [bodyText, setBodyText] = useState(rowData.bodyText);
+  const [buttonTitle, setButtonTitle] = useState(rowData.buttonTitle);
   const [img, setImg] = useState(null);
+  const [modifiedImgUrl, setModifiedImgUrl] = useState(
+    rowData.img.replace("/images/", "/images%2F")
+  );
   const [error, setError] = useState("");
 
   const types = ["image/png", "image/jpeg"]; // image types
@@ -43,36 +47,41 @@ const Upload = () => {
     }
   };
 
-  const handleUpload = async (e) => {
+  const handleEdit = async (e) => {
     e.preventDefault();
     setLoader(true);
 
     try {
-      // Upload the image to Firebase Storage
-      const storageRef = ref(storage, `images/${img.name}`);
-      await uploadBytes(storageRef, img);
+      let imgUrl;
+      if (img) {
+        // Upload the image to Firebase Storage
+        const storageRef = ref(storage, `images/${img.name}`);
+        await uploadBytes(storageRef, img);
 
-      // Get the download URL of the uploaded image
-      const imgUrl = await getDownloadURL(storageRef);
+        // Get the download URL of the uploaded image
+        imgUrl = await getDownloadURL(storageRef);
+      }
 
-      const dataToAdd = {
+      const updatedFields = {
         name: name,
         bodyText: bodyText,
-        img: imgUrl,
-        uploadDate: new Date().toISOString(),
+        img: img ? imgUrl : modifiedImgUrl,
+        // uploadDate: new Date().toISOString(),
       };
 
       if (headerName !== "Insights") {
-        dataToAdd.buttonTitle = buttonTitle;
+        updatedFields.buttonTitle = buttonTitle;
       }
 
-      // Store data in Firestore
-      await addDoc(collection(db, headerName), dataToAdd);
+      const docRef = doc(db, headerName, rowData.id);
+      // update data in Firestore
+      await updateDoc(docRef, updatedFields);
       // Clear form fields and error state after successful upload
       setName("");
       setBodyText("");
       setButtonTitle("");
       setImg(null);
+      setModifiedImgUrl(null);
       setError("");
       setLoader(false);
       if (headerName === "In The News") {
@@ -80,7 +89,7 @@ const Upload = () => {
       } else {
         navigate("/insights");
       }
-      toast.success("uploaded data Successfully");
+      toast.success("updated data Successfully");
     } catch (error) {
       setLoader(false);
       toast.error(error.message);
@@ -93,7 +102,7 @@ const Upload = () => {
       <Loader />
       <div className="content">
         <div className="heading_container">
-          <p className="heading">{headerName} - Upload</p>
+          <p className="heading">{headerName} - Edit</p>
         </div>
         <div className="main_con">
           <div className="left_con">
@@ -149,23 +158,23 @@ const Upload = () => {
                 <button
                   className="uploadBtn"
                   onClick={handleButtonClick}
-                  disabled={img ? true : false}
+                  disabled={img || modifiedImgUrl ? true : false}
                 >
                   Upload
                 </button>
                 <button
                   className="changeBtn"
                   onClick={handleButtonClick}
-                  disabled={!img}
+                  disabled={!img && !modifiedImgUrl}
                 >
                   Change Image
                 </button>
               </div>
             </div>
             <div className="imgPreview_field">
-              {img ? (
+              {img || modifiedImgUrl ? (
                 <img
-                  src={URL.createObjectURL(img)}
+                  src={img ? URL.createObjectURL(img) : modifiedImgUrl}
                   style={{
                     height: "100%",
                     width: "100%",
@@ -179,8 +188,8 @@ const Upload = () => {
               )}
             </div>
             <div className="uploadBtn_con">
-              <button className="uploadBtn" onClick={handleUpload}>
-                Upload
+              <button className="uploadBtn" onClick={handleEdit}>
+                Edit
               </button>
             </div>
           </div>
@@ -190,4 +199,4 @@ const Upload = () => {
   );
 };
 
-export default Upload;
+export default EditRow;

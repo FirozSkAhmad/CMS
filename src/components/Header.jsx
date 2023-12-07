@@ -30,7 +30,7 @@ const Header = ({ headerName }) => {
       <div className="title">
         <h2>{headerName}</h2>
       </div>
-      <div className="actions_con">
+      <div className="action_con">
         <div className="search_container">
           <input
             type="text"
@@ -54,6 +54,34 @@ const Header = ({ headerName }) => {
             <button>Upload New</button>
           </NavLink>
         )}
+      </div>
+      <div className="mvHead_con">
+        <div className="search_container">
+          <input
+            type="text"
+            className="search_input"
+            placeholder="Search Title By Name"
+          />
+          <img className="search_icon" src={searchIcon} alt="searchIcon SVG" />
+        </div>
+        <div className="bottom_container">
+          <h2>{headerName}</h2>
+          {headerName !== "Case Studies" ? (
+            <NavLink
+              style={{ textDecoration: "none" }}
+              to={{
+                pathname: "/upload",
+                search: `headerName=${headerName}`,
+              }}
+            >
+              <button>Upload New</button>
+            </NavLink>
+          ) : (
+            <NavLink style={{ textDecoration: "none" }} to="/caseStudyUpload">
+              <button>Upload New</button>
+            </NavLink>
+          )}
+        </div>
       </div>
       <div className={`side_nav ${isSideNavOpen ? "open" : ""}`}>
         <SideNav />

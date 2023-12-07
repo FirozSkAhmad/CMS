@@ -1,15 +1,20 @@
 .csUpload_con {
   display: flex;
   justify-content: center;
-  padding: 5px;
-  height: 100%;
 }
 
 .csContent {
   width: 90%;
 }
+
 .csHeading_container {
   border-bottom: 1px solid #000;
+  display: flex;
+  align-items: center;
+}
+
+.menu_con {
+  display: none;
 }
 .csHeading {
   margin: 20px;
@@ -57,6 +62,7 @@
 .imgUpload_field {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .buttons_con {
@@ -96,4 +102,35 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 2vw;
+}
+
+.side_nav {
+  position: fixed;
+  top: 0;
+  left: 0; /* Start from the left */
+  width: 0; /* Initially hidden width */
+  height: 100%;
+  background-color: #383838;
+  transition: width 0.3s ease; /* Smooth transition effect */
+  z-index: 1;
+  overflow-x: hidden;
+}
+
+.side_nav.open {
+  width: 90%; /* Expanded width when the .open class is present */
+}
+
+@media screen and (max-width: 800px) {
+  .csMain_con {
+    grid-template-columns: 1fr;
+  }
+  .menu_con {
+    display: flex;
+    align-items: center;
+    height: 20px;
+  }
+  .rightTextFields_con {
+    grid-template-columns: 1fr;
+    row-gap: 20px;
+  }
 }

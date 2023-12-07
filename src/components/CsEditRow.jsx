@@ -6,11 +6,18 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { doc, updateDoc } from "firebase/firestore";
 import Loader from "./Loader";
 import sharedContext from "../context/SharedContext";
+import menuIcon from "../../utils/menu.svg";
+import SideNav from "./SideNav";
 import toast from "react-hot-toast";
 
 const CsEditRow = () => {
   const navigate = useNavigate();
-  const { setLoader } = useContext(sharedContext);
+  const { setLoader, isSideNavOpen, setIsSideNavOpen } =
+    useContext(sharedContext);
+
+  const toggleSideNav = () => {
+    setIsSideNavOpen(!isSideNavOpen);
+  };
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -115,6 +122,14 @@ const CsEditRow = () => {
       <Loader />
       <div className="csContent">
         <div className="csHeading_container">
+          <div className="menu_con">
+            <img
+              className="menu_icon"
+              onClick={toggleSideNav}
+              src={menuIcon}
+              alt="menuIcon SVG"
+            />
+          </div>
           <p className="csHeading">{headerName} - Edit</p>
         </div>
         <div className="uploadBtn_con">
@@ -249,6 +264,9 @@ const CsEditRow = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className={`side_nav ${isSideNavOpen ? "open" : ""}`}>
+        <SideNav />
       </div>
     </div>
   );

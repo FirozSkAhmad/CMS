@@ -1,7 +1,6 @@
 import "./index.css";
 import { Outlet, createBrowserRouter, useLocation } from "react-router-dom";
 import Protected from "./components/Protected";
-import SideNav from "./components/SideNav";
 import Main from "./components/Main";
 import Upload from "./components/Upload";
 import Login from "./pages/Login";

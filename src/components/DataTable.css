@@ -55,7 +55,7 @@ td {
   border: 1px solid gray;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   .table_container {
     overflow: scroll;
   }
@@ -64,6 +64,6 @@ td {
   }
   .pagination_container {
     bottom: 30px;
-    right: 25%;
+    right: 20%;
   }
 }

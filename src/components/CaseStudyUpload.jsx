@@ -6,11 +6,18 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
 import Loader from "./Loader";
 import sharedContext from "../context/SharedContext";
+import menuIcon from "../../utils/menu.svg";
+import SideNav from "./SideNav";
 import toast from "react-hot-toast";
 
 const CaseStudyUpload = () => {
   const navigate = useNavigate();
-  const { setLoader } = useContext(sharedContext);
+  const { setLoader, isSideNavOpen, setIsSideNavOpen } =
+    useContext(sharedContext);
+
+  const toggleSideNav = () => {
+    setIsSideNavOpen(!isSideNavOpen);
+  };
 
   const [formData, setFormData] = useState({
     name: "",
@@ -104,6 +111,14 @@ const CaseStudyUpload = () => {
       <Loader />
       <div className="csContent">
         <div className="csHeading_container">
+          <div className="menu_con">
+            <img
+              className="menu_icon"
+              onClick={toggleSideNav}
+              src={menuIcon}
+              alt="menuIcon SVG"
+            />
+          </div>
           <p className="csHeading">Case Study - Upload</p>
         </div>
         <div className="uploadBtn_con">
@@ -234,6 +249,9 @@ const CaseStudyUpload = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className={`side_nav ${isSideNavOpen ? "open" : ""}`}>
+        <SideNav />
       </div>
     </div>
   );

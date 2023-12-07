@@ -6,11 +6,18 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
 import Loader from "./Loader";
 import sharedContext from "../context/SharedContext";
+import menuIcon from "../../utils/menu.svg";
+import SideNav from "./SideNav";
 import toast from "react-hot-toast";
 
 const Upload = () => {
   const navigate = useNavigate();
-  const { setLoader } = useContext(sharedContext);
+  const { setLoader, isSideNavOpen, setIsSideNavOpen } =
+    useContext(sharedContext);
+
+  const toggleSideNav = () => {
+    setIsSideNavOpen(!isSideNavOpen);
+  };
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -93,6 +100,14 @@ const Upload = () => {
       <Loader />
       <div className="content">
         <div className="heading_container">
+          <div className="menu_con">
+            <img
+              className="menu_icon"
+              onClick={toggleSideNav}
+              src={menuIcon}
+              alt="menuIcon SVG"
+            />
+          </div>
           <p className="heading">{headerName} - Upload</p>
         </div>
         <div className="main_con">
@@ -185,6 +200,9 @@ const Upload = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className={`side_nav ${isSideNavOpen ? "open" : ""}`}>
+        <SideNav />
       </div>
     </div>
   );

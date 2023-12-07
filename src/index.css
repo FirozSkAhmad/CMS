@@ -22,29 +22,47 @@ body {
 .sideBar {
   background-color: #383838;
   border-radius: 10px;
-  /* height: 97vh; */
+  height: 97vh;
 }
 
 .main {
   background-color: #e0e0e0;
   border-radius: 10px;
   border: 1px solid rgb(173, 173, 173);
-  /* height: 97vh; */
+  height: 97vh;
   padding: 12px;
+  overflow: auto;
+  /* Styling for the scrollbar */
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: grey white; /* For Firefox */
+
+  /* Styling for WebKit browsers (Chrome, Safari) */
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: grey;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    opacity: 0;
+  }
 }
 
 button {
   cursor: pointer;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   .screen {
     grid-template-columns: 1fr; /* Only one column for mobile view */
     padding: 0;
   }
 
   .sideBar {
-    display: none; 
+    display: none;
   }
 
   .main {
@@ -52,5 +70,6 @@ button {
     border: none;
     height: 100vh;
     width: 100vw;
+    overflow-y: scroll;
   }
 }

@@ -117,6 +117,9 @@ const CsEditRow = () => {
       setError(error.message);
     }
   };
+  const handleBack = () => {
+    navigate(-1);
+  };
   return (
     <div className="csUpload_con">
       <Loader />
@@ -133,6 +136,9 @@ const CsEditRow = () => {
           <p className="csHeading">{headerName} - Edit</p>
         </div>
         <div className="uploadBtn_con">
+          <button className="changeBtn" onClick={handleBack}>
+            Back
+          </button>
           <button className="uploadBtn" onClick={handleEdit}>
             Edit
           </button>

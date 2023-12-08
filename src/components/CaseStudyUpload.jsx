@@ -106,6 +106,9 @@ const CaseStudyUpload = () => {
       setError(error.message);
     }
   };
+  const handleBack = () => {
+    navigate(-1);
+  };
   return (
     <div className="csUpload_con">
       <Loader />
@@ -122,6 +125,9 @@ const CaseStudyUpload = () => {
           <p className="csHeading">Case Study - Upload</p>
         </div>
         <div className="uploadBtn_con">
+          <button className="changeBtn" onClick={handleBack}>
+            Back
+          </button>
           <button className="uploadBtn" onClick={handleUpload}>
             Upload
           </button>

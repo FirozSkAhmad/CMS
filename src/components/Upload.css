@@ -90,7 +90,10 @@
 }
 
 .uploadBtn_con {
-  text-align: end;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: end;
 }
 
 .side_nav {

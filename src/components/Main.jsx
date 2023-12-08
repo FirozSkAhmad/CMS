@@ -1,13 +1,12 @@
 import Header from "../components/Header";
 import DataTable from "../components/DataTable";
+import './Main.css'
 
 const Main = ({ name }) => {
   return (
-    <div>
+    <div className="master_con">
       <Header headerName={name} />
-      <div className="table_con">
-        <DataTable headerName={name} />
-      </div>
+      <DataTable headerName={name} />
     </div>
   );
 };

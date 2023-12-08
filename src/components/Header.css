@@ -5,6 +5,7 @@
   grid-template-columns: 1fr 1fr;
   align-items: center;
   column-gap: 10px;
+  height: 12%;
 }
 
 .menu_con {
@@ -84,11 +85,13 @@
   .search_input {
     width: 200px;
   }
+  
 }
 @media screen and (max-width: 800px) {
   .header_con {
     grid-template-columns: 1fr;
     row-gap: 20px;
+    height: 30%;
   }
   .menu_con {
     display: flex;

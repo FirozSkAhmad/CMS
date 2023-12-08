@@ -103,7 +103,9 @@ const EditRow = () => {
       setError(error.message);
     }
   };
-
+  const handleBack = () => {
+    navigate(-1);
+  };
   return (
     <div className="upload_con">
       <Loader />
@@ -203,6 +205,9 @@ const EditRow = () => {
               )}
             </div>
             <div className="uploadBtn_con">
+              <button className="changeBtn" onClick={handleBack}>
+                Back
+              </button>
               <button className="uploadBtn" onClick={handleEdit}>
                 Edit
               </button>

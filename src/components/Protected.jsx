@@ -15,7 +15,7 @@ const Protected = ({ cmp }) => {
     });
   }, []);
 
-  return <div>{cmp}</div>;
+  return cmp;
 };
 
 export default Protected;

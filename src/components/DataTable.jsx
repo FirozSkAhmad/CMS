@@ -75,7 +75,7 @@ const DataTable = ({ headerName }) => {
           </div>
           <div className="body_con">
             <h3>{data?.name}</h3>
-            <p>{data?.bodyText}</p>
+            <p>{headerName!=="Case Studies"?data?.bodyText:data.context}</p>
           </div>
           <div className="btns_con">
             <NavLink
@@ -95,76 +95,6 @@ const DataTable = ({ headerName }) => {
           </div>
         </div>
       ))}
-      {/* <table>
-        <thead>
-          <tr className="tableRow_con">
-            <th>
-              <input
-                type="checkbox"
-                checked={selectAll}
-                onChange={handleSelectAllChange}
-              />
-            </th>
-            <th>Title</th>
-            <th className="align_right">Date Of Upload</th>
-            <th className="align_center">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {visibleRows?.map((row) => (
-            <tr className="tableRow_con" key={row.id}>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={selectedRows.includes(row.id)}
-                  onChange={() => handleCheckboxChange(row.id)}
-                />
-              </td>
-              <td>{row.name}</td>
-              <td className="align_right">{row.uploadDate.split("T")[0]}</td>
-              <td className="align_center actions_con">
-                <NavLink
-                  to={{
-                    pathname:
-                      headerName !== "Case Studies" ? "/editRow" : "/csEditRow",
-                    search: `rowData=${encodeURIComponent(
-                      JSON.stringify(row)
-                    )}&headerName=${headerName}`,
-                  }}
-                >
-                  <u>Edit</u>
-                </NavLink>
-                <button
-                  className="remove_btn"
-                  onClick={() => removeRow(row.id)}
-                >
-                  Remove
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
-      {/* <div className="pagination_container">
-        <button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span>
-          {" "}
-          Page {currentPage} of {totalPages}{" "}
-        </span>
-        <button
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </div> */}
     </div>
   );
 };

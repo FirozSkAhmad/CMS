@@ -12,6 +12,7 @@
 }
 .card {
   width: 100%;
+  white-space: wrap;
   height: 380px;
   border: 1px solid gray;
   border-radius: 10px;
@@ -29,6 +30,7 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  overflow: auto;
 }
 .body_con,
 .btns_con {

@@ -1,6 +1,6 @@
 import "./Login.css";
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import sharedContext from "../context/SharedContext";
 import toast from "react-hot-toast";
@@ -92,9 +92,17 @@ const Login = () => {
                 <p>Remember me</p>
               </label>
             </div>
-            <div className="frg__Pas">
-              <p onClick={""}>Forgot password</p>
-            </div>
+            <NavLink
+              style={{
+                textDecoration: "none",
+                color: "white",
+              }}
+              to="/forgotPassword"
+            >
+              <div className="frg__Pas">
+                <p style={{ cursor: "pointer" }}>Forgot password</p>
+              </div>
+            </NavLink>
           </div>
           <div>{/* <span style={{ color: "red" }}>{error}</span> */}</div>
           <div className="sbt__Btn">

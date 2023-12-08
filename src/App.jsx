@@ -8,10 +8,12 @@ import CaseStudyUpload from "./components/CaseStudyUpload";
 import EditRow from "./components/EditRow";
 import CsEditRow from "./components/CsEditRow";
 import SideBar from "./components/SideBar";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const App = () => {
   const location = useLocation();
-  const isLoginPage = location.pathname === "/login";
+  const isLoginPage =
+    location.pathname === "/login" || location.pathname === "/forgotPassword";
   return (
     <>
       {!isLoginPage ? (
@@ -36,8 +38,12 @@ const appRouter = createBrowserRouter([
     path: "/",
     children: [
       {
-        element: <Protected cmp={<Login />} />,
+        element: <Login />,
         path: "/login",
+      },
+      {
+        element: <ForgotPassword />,
+        path: "/forgotPassword",
       },
       {
         element: <Protected cmp={<Main name="In The News" />} />,

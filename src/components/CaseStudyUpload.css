@@ -1,6 +1,20 @@
 .csUpload_con {
   display: flex;
   justify-content: center;
+  height: 100%;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: grey;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    opacity: 0;
+  }
 }
 
 .csContent {

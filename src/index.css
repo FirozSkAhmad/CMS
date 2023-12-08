@@ -31,24 +31,6 @@ body {
   border: 1px solid rgb(173, 173, 173);
   height: 97vh;
   padding: 12px;
-  overflow: auto;
-  /* Styling for the scrollbar */
-  scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: grey white; /* For Firefox */
-
-  /* Styling for WebKit browsers (Chrome, Safari) */
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: grey;
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-track {
-    opacity: 0;
-  }
 }
 
 button {

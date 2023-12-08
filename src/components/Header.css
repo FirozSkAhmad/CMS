@@ -23,6 +23,7 @@
 }
 
 .search_input {
+  width: 300px;
   padding: 10px;
   background-color: #cecece;
   border: 1px solid gray;
@@ -79,7 +80,11 @@
 .mvHead_con {
   display: none;
 }
-
+@media screen and (min-width: 800px) and (max-width: 1200px) {
+  .search_input {
+    width: 200px;
+  }
+}
 @media screen and (max-width: 800px) {
   .header_con {
     grid-template-columns: 1fr;

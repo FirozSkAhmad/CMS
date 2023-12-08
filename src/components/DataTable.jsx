@@ -20,8 +20,6 @@ const DataTable = ({ headerName }) => {
         id: doc.id,
         ...doc.data(),
       }));
-
-      console.log("Data from Firestore:", data);
       if (headerName === "In The News") {
         setNewsData(data);
       } else if (headerName === "Insights") {
@@ -39,57 +37,16 @@ const DataTable = ({ headerName }) => {
     fetchData();
   }, [headerName]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  let totalPages, visibleRows;
+  let completeData;
   if (headerName === "In The News") {
-    totalPages = Math.ceil(newsData.length / PAGE_SIZE);
-    const startIdx = (currentPage - 1) * PAGE_SIZE;
-    const endIdx = startIdx + PAGE_SIZE;
-    visibleRows = newsData.slice(startIdx, endIdx);
+    completeData = newsData;
   } else if (headerName === "Insights") {
-    totalPages = Math.ceil(insightsData.length / PAGE_SIZE);
-    const startIdx = (currentPage - 1) * PAGE_SIZE;
-    const endIdx = startIdx + PAGE_SIZE;
-    visibleRows = insightsData.slice(startIdx, endIdx);
+    completeData = insightsData;
   } else {
-    totalPages = Math.ceil(caseStudiesData.length / PAGE_SIZE);
-    const startIdx = (currentPage - 1) * PAGE_SIZE;
-    const endIdx = startIdx + PAGE_SIZE;
-    visibleRows = caseStudiesData.slice(startIdx, endIdx);
+    completeData = caseStudiesData;
   }
 
-  const [selectAll, setSelectAll] = useState(false);
-  const [selectedRows, setSelectedRows] = useState([]);
-
-  const handleCheckboxChange = (rowId) => {
-    const updatedSelectedRows = [...selectedRows];
-
-    if (updatedSelectedRows.includes(rowId)) {
-      updatedSelectedRows.splice(updatedSelectedRows.indexOf(rowId), 1);
-    } else {
-      updatedSelectedRows.push(rowId);
-    }
-    setSelectedRows(updatedSelectedRows);
-  };
-
-  const handleSelectAllChange = () => {
-    let updatedSelectedRows;
-
-    if (headerName === "In The News") {
-      updatedSelectedRows = selectAll ? [] : newsData.map((row) => row.id);
-    } else if (headerName === "Insights") {
-      updatedSelectedRows = selectAll ? [] : insightsData.map((row) => row.id);
-    } else {
-      updatedSelectedRows = selectAll
-        ? []
-        : caseStudiesData.map((row) => row.id);
-    }
-
-    setSelectedRows(updatedSelectedRows);
-    setSelectAll(!selectAll);
-  };
-
-  const removeRow = async (rowId) => {
+  const removeCard = async (rowId) => {
     try {
       const documentRef = doc(db, headerName, rowId);
       await deleteDoc(documentRef);
@@ -101,8 +58,44 @@ const DataTable = ({ headerName }) => {
   };
 
   return (
-    <div className="table_container">
-      <table>
+    <div className="cards_container">
+      {completeData?.map((data) => (
+        <div className="card" key={data.id}>
+          <div className="img_con">
+            <img
+              src={data?.img}
+              style={{
+                height: "100%",
+                width: "100%",
+                objectFit: "fill",
+                borderRadius:"10px 10px 0 0"
+              }}
+              alt="Preview"
+            />
+          </div>
+          <div className="body_con">
+            <h3>{data?.name}</h3>
+            <p>{data?.bodyText}</p>
+          </div>
+          <div className="btns_con">
+            <NavLink
+              to={{
+                pathname:
+                  headerName !== "Case Studies" ? "/editRow" : "/csEditRow",
+                search: `rowData=${encodeURIComponent(
+                  JSON.stringify(data)
+                )}&headerName=${headerName}`,
+              }}
+            >
+              <u>Edit</u>
+            </NavLink>
+            <button className="remove_btn" onClick={() => removeCard(data.id)}>
+              Remove
+            </button>
+          </div>
+        </div>
+      ))}
+      {/* <table>
         <thead>
           <tr className="tableRow_con">
             <th>
@@ -151,8 +144,8 @@ const DataTable = ({ headerName }) => {
             </tr>
           ))}
         </tbody>
-      </table>
-      <div className="pagination_container">
+      </table> */}
+      {/* <div className="pagination_container">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
@@ -171,7 +164,7 @@ const DataTable = ({ headerName }) => {
         >
           Next
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
